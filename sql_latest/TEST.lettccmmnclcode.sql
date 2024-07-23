@@ -1,0 +1,1 @@
+INSERT INTO [TEST.lettccmmnclcode] (cl_code, cl_code_nm, cl_code_dc, use_at, frst_regist_pnttm, frst_register_id, last_updt_pnttm, last_updusr_id) VALUES ('LET', '전자정부 프레임워크 경량환경 템플릿', '전자정부 프레임워크 경량환경 템플릿', 'Y', DATETIME'2024-07-17 10:33:50.793', 'SYSTEM', DATETIME'2024-07-17 10:33:50.793', 'SYSTEM');

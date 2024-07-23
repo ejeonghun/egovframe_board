@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="customBoardDAO">
+
+    <!-- 게시글 작성 -->
+    <insert id="insertPost" parameterType="egovframework.board.service.CustomBoardVO">
+        INSERT INTO posts (author, created_at, title, content, is_reply, parent_id, atch_file_id)
+        VALUES (#{author}, CURRENT_TIMESTAMP, #{title}, #{content}, 'N', NULL, #{atchFileId})
+    </insert>
+
+    <!-- 게시글 조회 -->
+    <select id="selectPost" parameterType="long" resultType="egovframework.board.service.CustomBoardVO">
+        SELECT board_id AS boardId, author, created_at AS createdAt, title, content, 
+               is_reply AS isReply, parent_id AS parentId, atch_file_id AS atchFileId
+        FROM posts
+        WHERE board_id = #{boardId} 
+    </select>
+
+    <!-- 게시글 목록 조회 -->
+    <select id="selectPostList" resultType="egovframework.board.service.CustomBoardVO">
+        SELECT board_id AS boardId, author, created_at AS createdAt, title, content, 
+               is_reply AS isReply, parent_id AS parentId, atch_file_id AS atchFileId
+        FROM posts
+		WHERE is_reply = 'N'
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 답변 등록 -->
+    <insert id="insertReplyPost" parameterType="egovframework.board.service.CustomBoardVO">
+        INSERT INTO posts (author, created_at, title, content, is_reply, parent_id, atch_file_id)
+        VALUES (#{author}, CURRENT_TIMESTAMP, #{title}, #{content}, 'Y', #{parentId}, #{atchFileId})
+    </insert>
+
+    <!-- 게시글 수정 -->
+    <update id="updatePost" parameterType="egovframework.board.service.CustomBoardVO">
+        UPDATE posts
+        SET title = #{title},
+            content = #{content},
+            created_at = CURRENT_TIMESTAMP
+        WHERE board_id = #{boardId}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deletePost" parameterType="long">
+        DELETE FROM posts
+        WHERE board_id = #{boardId}
+    </delete>
+    
+    
+    <!-- 답변 게시글 목록 조회 -->
+<select id="selectRepliesByParentId" resultType="egovframework.board.service.CustomBoardVO">
+        SELECT board_id AS boardId, author, created_at AS createdAt, title, content, 
+               is_reply AS isReply, parent_id AS parentId, atch_file_id AS atchFileId
+        FROM posts
+    	WHERE is_reply = 'Y'
+</select>
+
+    <!-- 답변 게시글 단일 조회 -->
+<select id="SelectReplyPost" parameterType="long" resultType="egovframework.board.service.CustomBoardVO">
+        SELECT board_id AS boardId, author, created_at AS createdAt, title, content, 
+               is_reply AS isReply, parent_id AS parentId, atch_file_id AS atchFileId
+        FROM posts
+    	WHERE parent_id = #{boardId}
+</select>
+
+</mapper>

@@ -1,0 +1,1 @@
+INSERT INTO [TEST.lettnauthorgroupinfo] (group_id, group_nm, group_creat_de, group_dc) VALUES ('GROUP_00000000000000', '기본 그룹입니다', '10:33:50.844 AM 07/17/2024                                  ', '기본 그룹');

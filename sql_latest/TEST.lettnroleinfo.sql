@@ -1,0 +1,1 @@
+INSERT INTO [TEST.lettnroleinfo] (role_code, role_nm, role_pttrn, role_dc, role_ty, role_sort, role_creat_de) VALUES ('cop-bbs', 'cop-bbs', '/cop/bbs/.*.do.*', '게시판', 'url', '1', '09:41:32.022 AM 07/17/2024                                  ');

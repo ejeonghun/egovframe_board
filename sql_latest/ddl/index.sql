@@ -1,0 +1,36 @@
+ALTER TABLE [TEST.lettnentrprsmber] ADD CONSTRAINT lettnentrprsmber_pk PRIMARY KEY (entrprs_mber_id);
+ALTER TABLE [TEST.lettnschdulinfo] ADD CONSTRAINT lettnschdulinfo_pk PRIMARY KEY (schdul_id);
+ALTER TABLE [TEST.lettnroleinfo] ADD CONSTRAINT lettnroleinfo_pk PRIMARY KEY (role_code);
+ALTER TABLE [TEST.lettnbbsmasteroptn] ADD CONSTRAINT lettnbbsmasteroptn_pk PRIMARY KEY (bbs_id);
+ALTER TABLE [TEST.lettccmmndetailcode] ADD CONSTRAINT lettccmmndetailcode_pk PRIMARY KEY (code_id,code);
+ALTER TABLE [TEST.lettnorgnztinfo] ADD CONSTRAINT lettnorgnztinfo_pk PRIMARY KEY (orgnzt_id);
+ALTER TABLE [TEST.lettnemplyrinfo] ADD CONSTRAINT lettnemplyrinfo_pk PRIMARY KEY (emplyr_id);
+ALTER TABLE [TEST.ids] ADD CONSTRAINT ids_pk PRIMARY KEY (table_name);
+ALTER TABLE [TEST.lettnauthorrolerelate] ADD CONSTRAINT lettnauthorrolerelate_pk PRIMARY KEY (author_code,role_code);
+ALTER TABLE [TEST.lettnbbs] ADD CONSTRAINT lettnbbs_pk PRIMARY KEY (ntt_id,bbs_id);
+ALTER TABLE [TEST.replies] ADD CONSTRAINT pk_replies_id PRIMARY KEY (id);
+ALTER TABLE [TEST.lettngnrlmber] ADD CONSTRAINT lettngnrlmber_pk PRIMARY KEY (mber_id);
+ALTER TABLE [TEST.lettnfiledetail] ADD CONSTRAINT lettnfiledetail_pk PRIMARY KEY (atch_file_id,file_sn);
+ALTER TABLE [TEST.lettccmmnclcode] ADD CONSTRAINT lettccmmnclcode_pk PRIMARY KEY (cl_code);
+ALTER TABLE [TEST.reply] ADD CONSTRAINT reply_pk PRIMARY KEY (reply_id);
+ALTER TABLE [TEST.lettnauthorgroupinfo] ADD CONSTRAINT lettnauthorgroupinfo_pk PRIMARY KEY (group_id);
+ALTER TABLE [TEST.lettnbbsmaster] ADD CONSTRAINT lettnbbsmaster_pk PRIMARY KEY (bbs_id);
+ALTER TABLE [TEST.lettnfile] ADD CONSTRAINT lettnfile_pk PRIMARY KEY (atch_file_id);
+ALTER TABLE [TEST.lettccmmncode] ADD CONSTRAINT lettccmmncode_pk PRIMARY KEY (code_id);
+ALTER TABLE [TEST.lettntmplatinfo] ADD CONSTRAINT lettntmplatinfo_pk PRIMARY KEY (tmplat_id);
+ALTER TABLE [TEST.lettnbbsuse] ADD CONSTRAINT lettnbbsuse_pk PRIMARY KEY (bbs_id,trget_id);
+ALTER TABLE [TEST.posts] ADD CONSTRAINT pk_posts_board_id PRIMARY KEY (board_id);
+
+
+ALTER TABLE [TEST.lettnentrprsmber] ADD CONSTRAINT  lettnentrprsmber_ibfk_1 FOREIGN KEY (group_id) REFERENCES [TEST.lettnauthorgroupinfo](group_id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettccmmndetailcode] ADD CONSTRAINT  lettccmmndetailcode_ibfk_1 FOREIGN KEY (code_id) REFERENCES [TEST.lettccmmncode](code_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettnemplyrinfo] ADD CONSTRAINT  lettnemplyrinfo_ibfk_1 FOREIGN KEY (orgnzt_id) REFERENCES [TEST.lettnorgnztinfo](orgnzt_id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettnemplyrinfo] ADD CONSTRAINT  lettnemplyrinfo_ibfk_2 FOREIGN KEY (group_id) REFERENCES [TEST.lettnauthorgroupinfo](group_id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettnbbs] ADD CONSTRAINT  lettnbbs_ibfk_1 FOREIGN KEY (bbs_id) REFERENCES [TEST.lettnbbsmaster](bbs_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE [TEST.replies] ADD CONSTRAINT  fk_replies_parent_id FOREIGN KEY (parent_id) REFERENCES [TEST.replies](id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE [TEST.replies] ADD CONSTRAINT  fk_replies_post_id FOREIGN KEY (post_id) REFERENCES [TEST.posts](board_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettngnrlmber] ADD CONSTRAINT  lettngnrlmber_ibfk_1 FOREIGN KEY (group_id) REFERENCES [TEST.lettnauthorgroupinfo](group_id) ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettnfiledetail] ADD CONSTRAINT  lettnfiledetail_ibfk_1 FOREIGN KEY (atch_file_id) REFERENCES [TEST.lettnfile](atch_file_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettccmmncode] ADD CONSTRAINT  lettccmmncode_ibfk_1 FOREIGN KEY (cl_code) REFERENCES [TEST.lettccmmnclcode](cl_code) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE [TEST.lettnbbsuse] ADD CONSTRAINT  lettnbbsuse_ibfk_1 FOREIGN KEY (bbs_id) REFERENCES [TEST.lettnbbsmaster](bbs_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE [TEST.posts] ADD CONSTRAINT  fk_posts_parent_id FOREIGN KEY (parent_id) REFERENCES [TEST.posts](board_id) ON DELETE CASCADE ON UPDATE RESTRICT;
