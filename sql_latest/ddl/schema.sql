@@ -159,7 +159,7 @@ created_at timestamp DEFAULT current_timestamp,
 updated_at timestamp DEFAULT null
 ) COLLATE utf8_bin  REUSE_OID ;
 
-ALTER SERIAL [TEST.replies_ai_id] START WITH 27;
+ALTER SERIAL [TEST.replies_ai_id] START WITH 33;
 CREATE TABLE [TEST].lettngnrlmber(
 mber_id character varying(60) DEFAULT '' NOT NULL,
 [password] character varying(600) NOT NULL,
@@ -292,7 +292,9 @@ title character varying(255) NOT NULL,
 content character varying(255) NOT NULL,
 is_reply character(1) DEFAULT 'N',
 parent_id bigint,
-atch_file_id character varying(255)
+atch_file_id character varying(255),
+updated_dt timestamp,
+post_cnt bigint DEFAULT 0 NOT NULL
 ) COLLATE utf8_bin  REUSE_OID ;
 
-ALTER SERIAL [TEST.posts_ai_board_id] START WITH 24;
+ALTER SERIAL [TEST.posts_ai_board_id] START WITH 28;

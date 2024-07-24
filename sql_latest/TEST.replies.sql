@@ -7,3 +7,4 @@ INSERT INTO [TEST.replies] (id, parent_id, post_id, author, content, created_at,
 INSERT INTO [TEST.replies] (id, parent_id, post_id, author, content, created_at, updated_at) VALUES (12, NULL, 11, 'user1', '123123', TIMESTAMP'2024-07-23 15:16:55', TIMESTAMP'2024-07-23 15:16:58');
 INSERT INTO [TEST.replies] (id, parent_id, post_id, author, content, created_at, updated_at) VALUES (14, NULL, 7, 'test1', '댓글 테스트 123123123123', TIMESTAMP'2024-07-23 16:02:54', TIMESTAMP'2024-07-23 16:02:54');
 INSERT INTO [TEST.replies] (id, parent_id, post_id, author, content, created_at, updated_at) VALUES (15, 10, 7, 'test1', '답글 테스트321312', TIMESTAMP'2024-07-23 16:03:07', TIMESTAMP'2024-07-23 16:03:07');
+INSERT INTO [TEST.replies] (id, parent_id, post_id, author, content, created_at, updated_at) VALUES (32, 19, 13, 'user1', '답글 테스트123', TIMESTAMP'2024-07-24 15:59:10', TIMESTAMP'2024-07-24 15:59:16');
