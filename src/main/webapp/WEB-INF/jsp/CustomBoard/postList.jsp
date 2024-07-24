@@ -50,6 +50,13 @@
             border-left: 3px solid #ddd; /* 답변 구분을 위한 선 */
         }
     </style>
+    <script>
+        function confirmDelete(url) {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                window.location.href = url;
+            }
+        }
+    </script>
 </head>
 <body>
 <!-- 게시글 리스트 View 페이지 -->
@@ -78,6 +85,7 @@
                 <th>작성자</th>
                 <th>작성일</th>
                 <th>내용</th>
+                <th>조회수</th>
                 <th>첨부파일 존재</th>
                 <th>답변 게시글 여부</th>
                 <th>수정/삭제</th>
@@ -90,16 +98,18 @@
                     <td>${post.author}</td>
                     <td>${post.createdAt}</td>
                     <td>${post.content}</td>
+                                        <td>${post.postCnt }</td>
                     <td>
                         <c:choose>
                             <c:when test="${not empty post.atchFileId}">Y</c:when>
                             <c:otherwise>N</c:otherwise>
                         </c:choose>
                     </td>
+
                     <td>N</td>
                     <td>
                         <a href="editPost.do?boardId=${post.boardId}">수정</a> / 
-                        <a href="deletePost.do?boardId=${post.boardId}">삭제</a>
+                        <a href="javascript:void(0);" onclick="confirmDelete('deletePost.do?boardId=${post.boardId}')">삭제</a>
                     </td>
                 </tr>
                 <!-- 답변 게시글들 표시 -->
@@ -110,6 +120,7 @@
                             <td>${replyPost.author}</td>
                             <td>${replyPost.createdAt}</td>
                             <td>${replyPost.content}</td>
+                            <td></td>
                             <td>
                                 <c:choose>
                                     <c:when test="${not empty replyPost.atchFileId}">Y</c:when>
@@ -119,7 +130,7 @@
                             <td>Y</td>
                             <td>
                                 <a href="editPost.do?boardId=${replyPost.boardId}">수정</a> / 
-                                <a href="deletePost.do?boardId=${replyPost.boardId}">삭제</a>
+                                <a href="javascript:void(0);" onclick="confirmDelete('deletePost.do?boardId=${replyPost.boardId}')">삭제</a>
                             </td>
                         </tr>
                     </c:if>

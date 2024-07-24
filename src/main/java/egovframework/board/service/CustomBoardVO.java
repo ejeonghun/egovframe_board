@@ -27,6 +27,26 @@ public class CustomBoardVO implements Serializable {
 	
 	private String atchFileId; // 첨부파일 ID
 	
+	private Timestamp updatedDt; // 수정 날짜
+	
+	private Long postCnt; // 조회수
+	
+
+	public Long getPostCnt() {
+		return postCnt;
+	}
+
+	public void setPostCnt(Long postCnt) {
+		this.postCnt = postCnt;
+	}
+
+	public Timestamp getUpdatedDt() {
+		return updatedDt;
+	}
+
+	public void setUpdatedDt(Timestamp updatedDt) {
+		this.updatedDt = updatedDt;
+	}
 
 	public Long getBoardId() {
 		return boardId;

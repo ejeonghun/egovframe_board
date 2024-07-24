@@ -8,13 +8,21 @@ public class CustomReplyVO implements Serializable {
 	private static final long serialVersionUID = -3779821913760046011L;
 	
     private Long id; // 댓글 ID
+    
     private Long parentId; // 부모 댓글 ID
+    
     private Long postId;  // 게시글 ID
+    
     private String author; // 작성자
+    
     private String content; // 내용
+    
     private Timestamp createdAt; // 생성일
+    
     private Timestamp updatedAt; // 수정일
-	public Long getId() {
+	
+    
+    public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {

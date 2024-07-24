@@ -43,16 +43,19 @@
                           concurrentExpiredUrl="/cmm/main/mainPage.do"
                           defaultTargetUrl="/cmm/main/mainPage.do"/>
 
-    <!-- Support for method security and pointcut security -->
-    <egov-security:initializer id="initializer" supportMethod="true" supportPointcut="false"/>
-    <egov-security:secured-object-config id="securedObjectConfig"
-	roleHierarchyString="
-			ROLE_ADMIN > ROLE_ADMIN
+<!--"ROLE_ADMIN > ROLE_ADMIN
 			ROLE_USER > ROLE_USER
 			ROLE_RESTRICTED > IS_AUTHENTICATED_FULLY
 			IS_AUTHENTICATED_FULLY >	IS_AUTHENTICATED_REMEMBERED
 			IS_AUTHENTICATED_REMEMBERED > IS_AUTHENTICATED_ANONYMOUSLY
-			IS_AUTHENTICATED_ANONYMOUSLY > ROLE_ANONYMOUS"
+			IS_AUTHENTICATED_ANONYMOUSLY > ROLE_ANONYMOUS" -->
+
+    <!-- Support for method security and pointcut security -->
+    <egov-security:initializer id="initializer" supportMethod="true" supportPointcut="false"/>
+    <egov-security:secured-object-config id="securedObjectConfig"
+	roleHierarchyString="ROLE_ADMIN > ROLE_USER
+			ROLE_USER > ROLE_ANONYMOUS" 
+	
 
        sqlRolesAndUrl="
        		SELECT a.ROLE_PTTRN url, b.AUTHOR_CODE authority

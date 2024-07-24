@@ -15,49 +15,86 @@
             background-color: #f4f4f4;
         }
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 20px auto;
             background: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         h1, h2 {
             color: #333;
             margin-bottom: 20px;
         }
-        table {
+        .post-table, .reply-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        th, td {
+        .post-table th, .post-table td, .reply-table th, .reply-table td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
         }
-        th {
+        .post-table th {
             background-color: #f4f4f4;
+            color: #555;
+            width: 15%;
         }
-        tr:nth-child(even) {
-            background-color: #fafafa;
+        .reply-table th {
+            background-color: #f4f4f4;
+            color: #555;
         }
-        .reply {
+        .action-links {
             margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-left: 4px solid #007bff;
+            text-align: right;
         }
         .action-links a {
-            margin-right: 15px;
+            display: inline-block;
+            margin-right: 10px;
+            padding: 10px 20px;
             text-decoration: none;
-            color: #007bff;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
         }
         .action-links a:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
             text-decoration: underline;
         }
-        .file-info {
-            margin-top: 10px;
+        .reply-form {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .reply-form input, .reply-form textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .reply-form button {
+            display: block;
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .reply-form button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -65,106 +102,84 @@
 <!-- 게시글 상세 View 페이지 -->
     <div class="container">
         <h1>게시글 상세보기</h1>
-		<a href="postList.do"> 게시글 목록</a>
+        <a class="back-link" href="postList.do">게시글 목록</a>
         <!-- 부모 게시글 상세 정보 -->
-        <h2>게시글</h2>
-        <table>
-<%--             <tr>
-                <th>ID</th>
-                <td>${post.boardId}</td>
-            </tr> --%>
-            <tr>
-                <th>작성자</th>
-                <td>${post.author}</td>
-            </tr>
-            <tr>
-                <th>작성일</th>
-                <td>${post.createdAt}</td>
-            </tr>
+        <table class="post-table">
             <tr>
                 <th>제목</th>
                 <td>${post.title}</td>
+                <c:choose>
+                <c:when test="${not empty post.updatedDt }">
+                	                <th>수정일</th>
+                <td>${post.updatedDt}</td>
+                </c:when>
+                <c:otherwise>
+                                <th>작성일</th>
+                <td>${post.createdAt}</td>
+                </c:otherwise>
+                </c:choose>
             </tr>
             <tr>
-                <th>내용</th>
-                <td>${post.content}</td>
+                <th>조회수</th>
+                <td>${post.postCnt}</td>
+                <th>글쓴이</th>
+                <td>${post.author}</td>
             </tr>
-<%--             <tr>
-                <th>첨부파일 ID</th>
-                <td>${post.atchFileId}</td>
-            </tr> --%>
+            <tr>
+            </tr>
+            <tr>
+                <th colspan="4">내용</th>
+            </tr>
+            <tr>
+                <td colspan="4">${post.content}</td>
+            </tr>
             <c:if test="${not empty post.atchFileId}">
-                
                 <tr> 
-                    <th>첨부파일 목록</th>
-                    <td colspan="2">
+                    <th colspan="4">첨부파일 목록</th>
+                </tr>
+                <tr>
+                    <td colspan="4">
                         <c:import url="/cmm/fms/selectFileInfs.do" charEncoding="utf-8">
                             <c:param name="param_atchFileId" value="${egovc:encrypt(post.atchFileId)}" />
                         </c:import>
                     </td>
                 </tr>
             </c:if>
-            <tr>
-                <th>답변 여부</th>
-                <td><c:if test="${not empty replyPost}">완료</c:if><c:if test="${empty replyPost}">대기중</c:if></td>
-            </tr>
-<%--             <tr>
-                <th>부모 ID</th>
-                <td>${post.parentId}</td>
-            </tr> --%>
         </table>
-
-        <div class="action-links">
-            <c:if test="${empty replyPost}">
-                <a href="replyPost.do?parentId=${post.boardId}">답변 작성</a>
-            </c:if>
-        </div>
 
         <!-- 답변 표시 -->
         <c:if test="${not empty replyPost}">
             <h2>답변</h2>
-            <div class="reply">
-                <table>
-<%--                     <tr>
-                        <th>ID</th>
-                        <td>${replyPost.boardId}</td>
-                    </tr> --%>
-                    <tr>
-                        <th>작성자</th>
-                        <td>${replyPost.author}</td>
-                    </tr>
-                    <tr>
-                        <th>작성일</th>
-                        <td>${replyPost.createdAt}</td>
-                    </tr>
-                    <tr>
-                        <th>제목</th>
-                        <td>${replyPost.title}</td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td>${replyPost.content}</td>
-                    </tr>
-<%--                     <tr>
-                        <th>첨부파일 ID</th>
-                        <td>${replyPost.atchFileId}</td>
-                    </tr> --%>
-<%--                     <tr>
-                        <th>부모 ID</th>
-                        <td>${replyPost.parentId}</td>
-                    </tr> --%>
-                     <c:if test="${not empty replyPost.atchFileId}">
-                <tr> 
-                    <th>첨부파일 목록</th>
-                    <td colspan="2">
-                        <c:import url="/cmm/fms/selectFileInfs.do" charEncoding="utf-8">
-                            <c:param name="param_atchFileId" value="${egovc:encrypt(replyPost.atchFileId)}" />
-                        </c:import>
-                    </td>
+            <table class="reply-table">
+                <tr>
+                    <th>작성자</th>
+                    <td>${replyPost.author}</td>
+                    <th>작성일</th>
+                    <td>${replyPost.createdAt}</td>
                 </tr>
-            </c:if>
-                </table>
-            </div>
+                <tr>
+                    <th>제목</th>
+                    <td colspan="3">${replyPost.title}</td>
+                </tr>
+                <tr>
+                    <th colspan="4">내용</th>
+                </tr>
+                <tr>
+                    <td colspan="4">${replyPost.content}</td>
+                </tr>
+                <c:if test="${not empty replyPost.atchFileId}">
+                    <tr> 
+                        <th colspan="4">첨부파일 목록</th>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <c:import url="/cmm/fms/selectFileInfs.do" charEncoding="utf-8">
+                                <c:param name="param_atchFileId" value="${egovc:encrypt(replyPost.atchFileId)}" />
+                            </c:import>
+                        </td>
+                    </tr>
+                </c:if>
+            </table>
         </c:if>
 
         <c:if test="${empty replyPost}">
@@ -174,7 +189,6 @@
         <!-- 댓글 목록 표시 -->
         <c:import url="/cop/bbs/replyList.do?postId=${post.boardId}" charEncoding="utf-8">
         </c:import>
-        
     </div>
 </body>
 </html>

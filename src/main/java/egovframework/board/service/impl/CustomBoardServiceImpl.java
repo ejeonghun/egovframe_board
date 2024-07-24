@@ -56,4 +56,9 @@ public class CustomBoardServiceImpl extends EgovAbstractServiceImpl implements C
     	return customBoardDAO.SelectReplyPost(boardId);
     }
     
+    @Override
+    public void postCntUpdate(Long boardId) throws Exception {
+    	customBoardDAO.postCntUpdate(boardId);
+    }
+    
 }

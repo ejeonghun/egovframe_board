@@ -19,4 +19,6 @@ public interface CustomBoardService {
     List<CustomBoardVO> selectRepliesByParentId() throws Exception;
     
     CustomBoardVO SelectReplyPost(Long boardId) throws Exception;
+    
+    void postCntUpdate(Long boardId) throws Exception;
 }
