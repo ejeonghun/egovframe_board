@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="registerDAO">
+	    <!-- 시퀀스 값 조회 쿼리 -->
+    <select id="getNextEmplyrId" resultType="string">
+        SELECT 'USRCNFRM_' || LPAD(user_id_seq.NEXTVAL, 11, '0') FROM DUAL
+    </select>
+
+
+    <!-- 회원가입 쿼리 -->
+    <!-- 관리자 회원가입 -->
+    <insert id="registerAdmin" parameterType="egovframework.com.cmm.RegisterVO">
+        INSERT INTO LETTNEMPLYRINFO (
+            emplyr_id,
+            user_nm,
+            password,
+            email_adres,
+            orgnzt_id,
+            esntl_id,
+            password_hint,
+            password_cnsr
+        )
+        VALUES (
+            #{id},
+            #{userNm},
+            #{password},
+            #{email},
+            #{orgnztId},
+            #{esntlId},
+            #{passwordHint},
+            #{passwordCnsr}
+        );
+    </insert>
+    <!-- 회원가입 쿼리 -->
+    <!-- 일반유저 회원가입 -->
+    <insert id="registerUser" parameterType="egovframework.com.cmm.RegisterVO">
+        INSERT INTO lettngnrlmber (
+            mber_id,
+            mber_nm,
+            password,
+            mber_email_adres,
+            esntl_id,
+            password_hint,
+            password_cnsr
+        )
+        VALUES (
+            #{id},
+            #{userNm},
+            #{password},
+            #{email},
+            #{esntlId},
+            #{passwordHint},
+            #{passwordCnsr}
+        );
+    </insert>
+    </mapper>

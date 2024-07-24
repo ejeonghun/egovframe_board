@@ -14,31 +14,37 @@
         <result property="updatedAt" column="updated_at"/>
     </resultMap>
 
+	<!-- 댓글 생성 -->
     <insert id="insertCustomReply" parameterType="egovframework.customreply.service.CustomReplyVO">
         INSERT INTO replies (parent_id, post_id, author, content, created_at, updated_at)
         VALUES (#{parentId}, #{postId}, #{author}, #{content}, NOW(), NOW())
     </insert>
 
+	<!-- 댓글 조회 -->
     <select id="selectReply" parameterType="long" resultMap="replyResultMap">
         SELECT * FROM replies WHERE id = #{id}
     </select>
 
+	<!-- 게시글 ID로 댓글 리스트 조회 -->
     <select id="selectRepliesByPostId" parameterType="long" resultMap="replyResultMap">
         SELECT * FROM replies
         WHERE post_id = #{postId}
         ORDER BY created_at ASC
     </select>
 
+	<!-- 부모 댓글 ID로 자식 댓글들 찾기 -->
     <select id="selectRepliesByParentReplyId" parameterType="long" resultMap="replyResultMap">
         SELECT * FROM replies WHERE parent_id = #{parentId} ORDER BY created_at ASC
     </select>
 
+	<!-- 댓글 업데이트 -->
     <update id="updateReply" parameterType="egovframework.customreply.service.CustomReplyVO">
         UPDATE replies
         SET content = #{content}, updated_at = NOW()
         WHERE id = #{id}
     </update>
 
+	<!-- 댓글 ID로 댓글 삭제 -->
     <delete id="deleteReply" parameterType="long">
         DELETE FROM replies WHERE id = #{id}
     </delete>
@@ -48,6 +54,7 @@
         DELETE FROM replies WHERE parent_id = #{id}
     </delete>
 
+	<!-- 게시글 ID로 댓글 모두 삭제 -->
     <delete id="deleteReplyPostId" parameterType="long">
         DELETE FROM replies WHERE post_id = #{id}
     </delete>

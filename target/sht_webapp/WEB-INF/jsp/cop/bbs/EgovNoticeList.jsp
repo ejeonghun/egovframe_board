@@ -17,6 +17,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <!-- 시큐리티 tag -->
 <c:set var="ImgUrl" value="/images/egovframework/cop/bbs/"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -137,11 +138,20 @@
                                 <li>
                                     <div class="buttons" style="position:absolute;left:870px;top:182px;">
                                         <a href="#LINK" onclick="javascript:fn_egov_select_noticeList('1'); return false;"><img src="<c:url value='/images/img_search.gif' />" alt="search" />조회 </a>
-                                        <% if(null != session.getAttribute("LoginVO")){ %>
-                                        <c:if test="${brdMstrVO.authFlag == 'Y'}">
-                                            <a href="<c:url value='/cop/bbs${prefix}/addBoardArticle.do'/>?bbsId=<c:out value="${boardVO.bbsId}"/>">등록</a>
-                                        </c:if>
-                                        <%} %>
+                                        <% if (session.getAttribute("LoginVO") != null) { %>
+        <c:if test="${brdMstrVO.authFlag == 'Y'}">
+            <c:choose>
+                <c:when test="${brdMstrVO.bbsNm == '공지사항'}">
+                    <c:if test="${isAdmin}">
+                        <a href="<c:url value='/cop/bbs${prefix}/addBoardArticle.do'/>?bbsId=<c:out value='${boardVO.bbsId}'/>">등록</a>
+                    </c:if>
+                </c:when>
+                <c:otherwise>
+                    <a href="<c:url value='/cop/bbs${prefix}/addBoardArticle.do'/>?bbsId=<c:out value='${boardVO.bbsId}'/>">등록</a>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
+    <% } %>
                                     </div>                              
                                 </li>      
                             </ul>

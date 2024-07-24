@@ -26,9 +26,10 @@
 	<li><a href="/sht_webapp/EgovPageLink.do?menuNo=21&linkIndex=13">정보마당</a></li>
 	<li><a href="/sht_webapp/EgovPageLink.do?menuNo=31&linkIndex=15">고객지원</a></li>
 	<li><a href="/sht_webapp/cop/smt/sim/EgovIndvdlSchdulManageWeekList.do?menuNo=42">알림마당</a></li>
+	<li><a href="/sht_webapp/cop/bbs/postList.do">커스텀 게시판</a></li>
     <%
        LoginVO loginVO = (LoginVO)session.getAttribute("LoginVO"); 
-       if(loginVO != null){ 
+       if(loginVO != null && loginVO.getUserSe().equals("USR")){ 
     %>
     <li><a href="/sht_webapp/cop/smt/sim/EgovIndvdlSchdulManageMonthList.do?menuNo=52">사이트관리(관리자)</a></li>
     <%

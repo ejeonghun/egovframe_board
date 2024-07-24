@@ -13,42 +13,49 @@
     <security:http pattern="/images/**" security="none"/>
     <security:http pattern="/js/**" security="none"/>
     <security:http pattern="/resource/**" security="none"/>
-    <security:http pattern="\A/WEB-INF/jsp/.*\Z" request-matcher="regex" security="none"/>
+    <security:http pattern="\A/WEB-INF/jsp/.*\Z" request-matcher="regex" security="none"/> 
     
 
+
+    <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
     <!-- eGovFrame security configuration -->
     <egov-security:config id="securityConfig"
-                          loginUrl="/uat/uia/actionSecurityLogin.do"
-                          logoutSuccessUrl="/uat/uia/egovLoginUsr.do"
+                          loginUrl="/uat/uia/egovLoginUsr.do"
+                          logoutSuccessUrl="/cmm/main/mainPage.do"
                           loginFailureUrl="/uat/uia/egovLoginUsr.do?login_error=1"
                           accessDeniedUrl="/sec/ram/accessDenied.do"
                           dataSource="egov.dataSource"
                           jdbcUsersByUsernameQuery="select emplyr_id as user_id,
-       1 as enabled,
-       user_email,
-       user_nm,
-       user_se
-from lettnemplyrinfo
-where emplyr_id = ?"
-                          jdbcAuthoritiesByUsernameQuery="select emplyr_id, role from lettnemplyrinfo where emplyr_id = ?"
+                          password,
+						       1 as enabled,
+						       email_adres as user_email,
+						       user_nm
+						from lettnemplyrinfo
+						where emplyr_id = ?"
+						
+                          jdbcAuthoritiesByUsernameQuery="select emplyr_id as user_id, &quot;role&quot; as AUTHORITY from lettnemplyrinfo where emplyr_id = ?"
                           jdbcMapClass="egovframework.let.uat.uia.service.impl.EgovSessionMapping"
                           requestMatcherType="regex"
-                          hash="plaintext"
+                          hash="sha-256"
                           hashBase64="false"
                           concurrentMaxSessons="1"
+                          cacheControl="true"
                           concurrentExpiredUrl="/cmm/main/mainPage.do"
                           defaultTargetUrl="/cmm/main/mainPage.do"/>
 
-    <!-- Support for method security and pointcut security -->
-    <egov-security:initializer id="initializer" supportMethod="true" supportPointcut="false"/>
-
-    <egov-security:secured-object-config id="securedObjectConfig"
-	roleHierarchyString="
-			ROLE_ADMIN > ROLE_USER
-			ROLE_USER > ROLE_RESTRICTED
+<!--"ROLE_ADMIN > ROLE_ADMIN
+			ROLE_USER > ROLE_USER
 			ROLE_RESTRICTED > IS_AUTHENTICATED_FULLY
 			IS_AUTHENTICATED_FULLY >	IS_AUTHENTICATED_REMEMBERED
-			IS_AUTHENTICATED_REMEMBERED > IS_AUTHENTICATED_ANONYMOUSLY"
+			IS_AUTHENTICATED_REMEMBERED > IS_AUTHENTICATED_ANONYMOUSLY
+			IS_AUTHENTICATED_ANONYMOUSLY > ROLE_ANONYMOUS" -->
+
+    <!-- Support for method security and pointcut security -->
+    <egov-security:initializer id="initializer" supportMethod="true" supportPointcut="false"/>
+    <egov-security:secured-object-config id="securedObjectConfig"
+	roleHierarchyString="ROLE_ADMIN > ROLE_USER
+			ROLE_USER > ROLE_ANONYMOUS" 
+	
 
        sqlRolesAndUrl="
        		SELECT a.ROLE_PTTRN url, b.AUTHOR_CODE authority
@@ -81,5 +88,4 @@ where emplyr_id = ?"
         <property name="allowSemicolon" value="true"/>
     </bean>
     <security:http-firewall ref="egovStrictHttpFirewall"/>
-
 </beans>

@@ -7,9 +7,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="java.sql" level="INFO" additivity="false">
-            <AppenderRef ref="console" />
-        </Logger>
+		<logger name="java.sql" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console"/>
+		</logger>
         <Logger name="egovframework" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
@@ -23,7 +24,7 @@
 	    <Logger name="org.springframework" level="DEBUG" additivity="false">
 	        <AppenderRef ref="console" />
 	    </Logger>
-        <Root level="INFO">
+        <Root level="DEBUG">
             <AppenderRef ref="console" />
         </Root>
     </Loggers>

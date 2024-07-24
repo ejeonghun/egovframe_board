@@ -7,15 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
 <meta http-equiv="content-language" content="ko">
 <title>ERROR</title>
+<script type="text/javascript">
+    function showAlertAndRedirect() {
+        alert("로그인 후 이용해주세요");
+        window.location.href = "/sht_webapp/uat/uia/egovLoginUsr.do";
+    }
+</script>
 </head>
-<body>
+<body onload="showAlertAndRedirect()">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td width="100%" height="100%" align="center" valign="middle" style="padding-top:150px;"><table border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td><span style="font-family:Tahoma; font-weight:bold; color:#000000; line-height:150%; width:440px; height:70px;">오류발생 알림화면(허용되지 않는 요청을 하셨습니다)</span></td>
-      </tr>
-    </table></td>
+    <td width="100%" height="100%" align="center" valign="middle" style="padding-top:150px;">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><span style="font-family:Tahoma; font-weight:bold; color:#000000; line-height:150%; width:440px; height:70px;">오류발생 알림화면(허용되지 않는 요청을 하셨습니다)</span></td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
 </body>

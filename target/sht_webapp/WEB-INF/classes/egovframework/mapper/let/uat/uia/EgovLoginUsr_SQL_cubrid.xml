@@ -42,7 +42,7 @@
 			  FROM LETTNGNRLMBER
 			 WHERE mber_id = #{id}
 			   AND password = #{password}
-			   AND mber_sttus = 'P'
+
 			
 		</if>
 		<!-- 기업회원 -->
@@ -59,7 +59,7 @@
 			  FROM LETTNENTRPRSMBER
 			 WHERE entrprsmber_id = #{id}
 			   AND entrprs_mber_password = #{password}
-			   AND entrprs_mber_sttus = 'P'
+
 			
 		</if>
 		<!-- 업무사용자 -->
@@ -72,11 +72,9 @@
 			     , email_adres AS email
 			     , 'USR' AS userSe
 			     , orgnzt_id AS orgnztId
-			     , esntl_id AS uniqId
 			  FROM LETTNEMPLYRINFO
 			 WHERE emplyr_id = #{id}
 			   AND password = #{password}
-			   AND emplyr_sttus_code = 'P'
 			
 		</if>
 	</select>
@@ -201,4 +199,6 @@
 			
 		</if>
 	</update>
+
+
 </mapper>

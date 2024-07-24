@@ -37,6 +37,8 @@ function actionLogin() {
         return false;
     } else {
         document.loginForm.action="<c:url value='/uat/uia/actionLogin.do'/>";
+        //document.loginForm.j_username.value = document.loginForm.userSe.value + document.loginForm.username.value;
+        //document.loginForm.action="<c:url value='/j_spring_security_check'/>";
         document.loginForm.submit();
     }
 }
@@ -113,9 +115,15 @@ function fnInit() {
                 <!-- 타이틀 이미지 -->            
                 <div id="content_img_div"><img  alt="LOGIN 표준프레임워크 경량환경 단순 홈페이지에 오신것을 환영합니다." src="<c:url value='/'/>images/subtitle/img_subtitle_login.gif" width="776" height="230" /></div>       
                     <div class="user_login">
-                            <form:form name="loginForm" method="post" action="#LINK">
+                            <form:form name="loginForm" action="/uat/uia/actionSecurityLogin.do" method="post">
                             <div class="user_login_ultop">
+                            
                                 <ul>
+                                                            <li>
+                                <label for="userSe">사용자 구분:</label>
+                                <input type="radio" id="userSeUsr" name="userSe" value="GNR" checked><label for="userSeUsr">일반 사용자</label>
+                                <input type="radio" id="userSeAdmin" name="userSe" value="USR"><label for="userSeAdmin">관리자</label>
+                            </li>
                                     <li>
                                         <label for="id"><img alt="login" src="<c:url value='/'/>images/login/img_idtext.gif" /></label>
                                         <input type="text" class="input_style" title="아이디를 입력하세요." id="id" name="id" maxlength="10"/>
@@ -132,7 +140,6 @@ function fnInit() {
                                 <input type="image" alt="로그인 버튼" class="btn_style" onclick="javascript:actionLogin()" src="<c:url value='/'/>images/login/btn_login.gif"  />
                             </div>
                             <input type="hidden" name="message" value="${message}" />
-				            <input type="hidden" name="userSe"  value="USR"/>
 				            <!-- <input type="hidden" name="j_username" />-->
                             </form:form>
                             <div class="text_area">

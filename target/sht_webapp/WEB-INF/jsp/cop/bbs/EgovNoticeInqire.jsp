@@ -227,10 +227,33 @@
                     <!-- 버튼 끝 -->                           
                 </form>
 
+
+				<c:forEach var="reply" items="${replyList}">
+				    <div class="reply">
+				        <p><strong>${reply.createdId}</strong>: ${reply.content}</p>
+				    </div>
+				</c:forEach>
+ 				
+<%--                 <div id="replyList">
+                    <jsp:include page="/WEB-INF/jsp/cop/reply/replyList.jsp">
+                        <jsp:param name="nttId" value="${result.nttId}" />
+                    </jsp:include>
+                </div> --%>
+                <!-- 댓글 목록 끝 -->
+
+                <!-- 댓글 작성 폼 시작 -->
+                <form name="replyfrm" method="post" action="<c:url value='/cop/reply/writeReply.do'/>">
+                    <!-- 게시글 id -->
+                    <input type="hidden" name="nttId" value="<c:out value='${result.nttId}'/>" >
+                    <textarea name="content" rows="4" cols="50"></textarea>
+                    <input type="submit" value="댓글 작성"/>
+                </form>
+                <!-- 댓글 작성 폼 끝 -->				
+				
+
             </div>  
             <!-- //content 끝 -->    
     </div>  
-    <!-- //container 끝 -->
     <!-- footer 시작 -->
     <div id="footer"><jsp:include page="/WEB-INF/jsp/main/inc/EgovIncFooter.jsp"/></div>
     <!-- //footer 끝 -->

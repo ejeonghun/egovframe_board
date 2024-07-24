@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customReplyDAO">
+
+    <resultMap id="replyResultMap" type="egovframework.customreply.service.CustomReplyVO">
+        <id property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="postId" column="post_id"/>
+        <result property="author" column="author"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <insert id="insertCustomReply" parameterType="egovframework.customreply.service.CustomReplyVO">
+        INSERT INTO replies (parent_id, post_id, author, content, created_at, updated_at)
+        VALUES (#{parentId}, #{postId}, #{author}, #{content}, NOW(), NOW())
+    </insert>
+
+    <select id="selectReply" parameterType="long" resultMap="replyResultMap">
+        SELECT * FROM replies WHERE id = #{id}
+    </select>
+
+    <select id="selectRepliesByPostId" parameterType="long" resultMap="replyResultMap">
+        SELECT * FROM replies
+        WHERE post_id = #{postId}
+        ORDER BY created_at ASC
+    </select>
+
+    <select id="selectRepliesByParentReplyId" parameterType="long" resultMap="replyResultMap">
+        SELECT * FROM replies WHERE parent_id = #{parentId} ORDER BY created_at ASC
+    </select>
+
+    <update id="updateReply" parameterType="egovframework.customreply.service.CustomReplyVO">
+        UPDATE replies
+        SET content = #{content}, updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteReply" parameterType="long">
+        DELETE FROM replies WHERE id = #{id}
+    </delete>
+    
+    <!-- 부모 댓글 삭제 로직 만약 답글이 있으면 연쇄적으로 지우지 못해서 이거 사용 -->
+	<delete id="deleteParentReplyLogic" parameterType="long">
+        DELETE FROM replies WHERE parent_id = #{id}
+    </delete>
+
+    <delete id="deleteReplyPostId" parameterType="long">
+        DELETE FROM replies WHERE post_id = #{id}
+    </delete>
+
+</mapper>
