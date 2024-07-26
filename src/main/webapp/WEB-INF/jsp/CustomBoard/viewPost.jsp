@@ -104,6 +104,7 @@
         <h1>게시글 상세보기</h1>
         <a class="back-link" href="postList.do">게시글 목록</a>
         <!-- 부모 게시글 상세 정보 -->
+        <hr/>
         <table class="post-table">
             <tr>
                 <th>제목</th>
@@ -152,6 +153,7 @@
 
         <!-- 답변이 존재한다면 표시 -->
         <c:if test="${not empty replyPost}">
+        		<hr/>
             <h2>답변</h2>
             <table class="reply-table">
                 <tr>
@@ -185,13 +187,18 @@
                 </c:if>
             </table>
         </c:if>
-
+        		<hr/>
         <c:if test="${empty replyPost}">
             <p>답변이 없습니다.</p>
+            <div class="action-links">
+            <a href="replyPost.do?parentId=${post.boardId}">답변 작성</a>
+        </div>
         </c:if>
         
+		
         <!-- 댓글 목록 표시 -->
         <c:import url="/cop/bbs/replyList.do?postId=${post.boardId}" charEncoding="utf-8">
+
         </c:import>
     </div>
 </body>

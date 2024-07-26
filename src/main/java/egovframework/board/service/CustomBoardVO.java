@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * 게시판 관련 VO
+ * */
 public class CustomBoardVO implements Serializable {
 
     /**
